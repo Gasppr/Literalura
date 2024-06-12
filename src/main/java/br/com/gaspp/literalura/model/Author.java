@@ -1,11 +1,22 @@
 package br.com.gaspp.literalura.model;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name="author")
 public class Author {
-    String name;
-    Integer birth_year;
-    Integer death_year;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private Integer birth_year;
+    private Integer death_year;
+
+    @ManyToOne
+    private Book book;
+
+    public Author(){}
 
     public Author(String name, Integer birth_year, Integer death_year) {
         this.name = name;
@@ -13,6 +24,21 @@ public class Author {
         this.death_year = death_year;
     }
 
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

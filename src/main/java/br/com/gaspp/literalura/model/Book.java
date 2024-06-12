@@ -1,20 +1,41 @@
 package br.com.gaspp.literalura.model;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Entity(name = "book")
+@Table
 public class Book {
-     String title;
-    List<AuthorData> authors;
-    List<String> languages;
-    Double downloadNumber;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(unique = true)
+    private String title;
+
+    private List<String> languages;
+
+    private Double downloadNumber;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Author> authors = new ArrayList<>();
+
+
+    public Book(){}
     public Book(BookData data) {
         this.title = data.title();
-        this.authors = data.authors();
         this.languages = data.languages();
         this.downloadNumber = data.downloadNumber();
+    }
+
+
+    public void setEpisodio(List<Author> authors) {
+        authors.forEach(e -> e.setBook(this));
+        this.authors = authors;
     }
 
     public String getTitle() {
@@ -25,11 +46,11 @@ public class Book {
         this.title = title;
     }
 
-    public List<AuthorData> getAuthors() {
+    public List<Author> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<AuthorData> authors) {
+    public void setAuthors(List<Author> authors) {
         this.authors = authors;
     }
 

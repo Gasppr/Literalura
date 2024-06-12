@@ -20,6 +20,7 @@ public class Main {
     @Autowired
     private BookRepository repository;
 
+    List<Book> bookList = new ArrayList<>();
 
     public Main(BookRepository repository){
         this.repository = repository;
@@ -55,6 +56,9 @@ public class Main {
                     case 2:
                         getBookByTitulo();
                         break;
+                    case 3:
+                        getAllBooks();
+                        break;
                     case 0:
                         System.out.println("Saindo...");
                         break;
@@ -62,6 +66,14 @@ public class Main {
                 }
             }
 
+
+    }
+
+    private void getAllBooks() {
+        bookList = repository.findAll();
+        bookList.stream()
+                .sorted(Comparator.comparing(Book::getTitle))
+                .forEach(System.out::println);
 
     }
 
@@ -86,6 +98,7 @@ public class Main {
 
     private void getBookByTitulo() {
 
+        getAllBooks();
         System.out.println("Digite o titulo do livro:");
         var title = sc.nextLine();
         bookFound = repository.findByTitleContainingIgnoreCase(title);

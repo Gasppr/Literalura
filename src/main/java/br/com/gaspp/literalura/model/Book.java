@@ -26,10 +26,10 @@ public class Book {
 
 
     public Book(){}
-    public Book(BookData data) {
-        this.title = data.title();
-        this.languages = data.languages();
-        this.downloadNumber = data.downloadNumber();
+    public Book(BooksResult data) {
+        this.title = data.bookDataList().get(0).title();
+        this.languages = data.bookDataList().get(0).languages();
+        this.downloadNumber = data.bookDataList().get(0).downloadNumber();
     }
 
 

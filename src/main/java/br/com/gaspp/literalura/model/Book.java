@@ -69,4 +69,13 @@ public class Book {
     public void setDownloadNumber(Double downloadNumber) {
         this.downloadNumber = downloadNumber;
     }
+
+    @Override
+    public String toString() {
+        return  "id=" + id +
+                ", title='" + title + '\'' +
+                ", languages=" + languages +
+                ", downloadNumber=" + downloadNumber +
+                ", authors=" + authors;
+    }
 }
